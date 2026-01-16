@@ -3,6 +3,7 @@
 # on terminal: npm i @google/genai
 #api key from: AIzaSyDUw4tDg0XGudVlWf6p-bZQpe7NYzkHkLQ
 
+
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -10,7 +11,9 @@ from google.genai import types
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+client = genai.Client(
+    api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 SYSTEM_INSTRUCTION = (
     "You are a DSA instructor. Answer only questions related to "
