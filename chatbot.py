@@ -3,17 +3,13 @@
 # on terminal: npm i @google/genai
 #api key from: AIzaSyDUw4tDg0XGudVlWf6p-bZQpe7NYzkHkLQ
 
-
 import os
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 
 load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GOOGLE_API_KEY")
-)
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 SYSTEM_INSTRUCTION = (
     "You are a DSA instructor. Answer only questions related to "
@@ -22,12 +18,8 @@ SYSTEM_INSTRUCTION = (
     "Politely refuse non-DSA questions."
 )
 
+model = genai.GenerativeModel("models/text-bison-001")
+
 def get_response(user_input: str) -> str:
-    response = client.models.generate_content(
-        model="models/gemini-1.5-flash",
-        contents=user_input,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_INSTRUCTION
-        )
-    )
+    response = model.generate_content(user_input)
     return response.text
