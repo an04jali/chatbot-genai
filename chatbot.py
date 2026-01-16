@@ -3,17 +3,15 @@
 # on terminal: npm i @google/genai
 #api key from: AIzaSyDUw4tDg0XGudVlWf6p-bZQpe7NYzkHkLQ
 
+
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-# Load environment variables (local only)
 load_dotenv()
 
-# Configure Gemini API key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# System instruction
 SYSTEM_INSTRUCTION = (
     "You are a DSA instructor. Answer only questions related to "
     "Data Structures and Algorithms. Explain concepts simply, "
@@ -21,9 +19,8 @@ SYSTEM_INSTRUCTION = (
     "Politely refuse non-DSA questions."
 )
 
-# Create model
 model = genai.GenerativeModel(
-    model_name="gemini-pro",
+    model_name="gemini-1.5-flash",
     system_instruction=SYSTEM_INSTRUCTION
 )
 
