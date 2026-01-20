@@ -27,5 +27,5 @@ The bot answers **only Data Structures & Algorithms questions**, explains concep
 
 ---
 
-## 📂 Project Structure
+
 
