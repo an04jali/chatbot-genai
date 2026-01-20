@@ -5,24 +5,33 @@
 
 import os
 from dotenv import load_dotenv
-from google import genai
+from groq import Groq
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-
-SYSTEM_INSTRUCTION = (
-    "You are a DSA instructor. Answer only questions related to "
-    "Data Structures and Algorithms. Explain concepts simply, "
-    "use examples if needed, and provide a short quiz after each explanation. "
-    "Politely refuse non-DSA questions."
-)
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def get_response(user_input: str) -> str:
-    response = client.models.generate_content(
-        model="gemini-1.5-flash",
-        contents=user_input,
-        system_instruction=SYSTEM_INSTRUCTION
-    )
-    return response.text
+    prompt = f"""
+You are a DSA Instructor.
 
+Rules:
+- Answer ONLY Data Structures & Algorithms questions
+- Explain concepts simply
+- Use examples if needed
+- Add a short quiz at the end
+- Politely refuse non-DSA questions
+
+Question:
+{user_input}
+"""
+
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.4
+    )
+
+    return response.choices[0].message.content
