@@ -1,3 +1,6 @@
+import os, streamlit as st
+st.write("API key loaded:", bool(os.getenv("GROQ_API_KEY")))
+
 import streamlit as st
 from chatbot import get_response
 
